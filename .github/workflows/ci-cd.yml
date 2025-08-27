@@ -11,7 +11,7 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: infinita-pipeline
+  IMAGE_PREFIX: infinitra-pipeline
 
 jobs:
   build-and-push:

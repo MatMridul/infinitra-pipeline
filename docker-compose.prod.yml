@@ -1,6 +1,6 @@
 services:
   backend:
-    image: ghcr.io/matmridul/infinita-pipeline-backend:latest
+    image: ghcr.io/matmridul/infinitra-pipeline-backend:latest
     container_name: backend_service
     restart: unless-stopped
     ports:
@@ -10,7 +10,7 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8000
 
   frontend:
-    image: ghcr.io/matmridul/infinita-pipeline-frontend:latest
+    image: ghcr.io/matmridul/infinitra-pipeline-frontend:latest
     container_name: frontend_service
     restart: unless-stopped
     ports:
