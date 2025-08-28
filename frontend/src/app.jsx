@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div>
-      <h1>Hi Infinitra!</h1>
+      <h1>Hi Saida sir!</h1>
       {/*<p>{message}</p>*/}
     </div>
   )
