@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mridul Mathur | AI & Systems Engineer</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --muted: #444444;
+      --border: #000000;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links a {
+      margin-left: 26px;
+      font-size: 0.95rem;
+      color: var(--text);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--text);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 110px 10%;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 3.8rem;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 36px;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 2px solid var(--border);
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+    }
+
+    /* GRID / CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 36px;
+    }
+
+    .card {
+      border: 2px solid var(--border);
+      padding: 30px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    /* SKILLS */
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .pill {
+      border: 2px solid var(--border);
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .pill:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 50px 10%;
+      font-size: 0.9rem;
+      border-top: 2px solid var(--border);
+    }
+
+    /* ANIMATION */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-container">
+    <strong>Mridul Mathur</strong>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container reveal">
+    <span class="badge">AI • Full-Stack • Cloud Systems</span>
+    <h1>Mridul Mathur</h1>
+    <p>
+      AI & Systems Engineer · Full-Stack Developer (AWS Cloud)<br/>
+      B.Tech CSE (AI & ML), SRM Institute of Science & Technology
+    </p>
+
+    <p style="margin-top:28px;">
+      <a href="mailto:mridul.mat@outlook.com">Email</a> ·
+      <a href="https://www.linkedin.com/in/matmridul/" target="_blank">LinkedIn</a> ·
+      <a href="https://github.com/MatMridul/" target="_blank">GitHub</a>
+    </p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container reveal">
+    <h2>About</h2>
+    <p>
+      I work at the intersection of AI, full-stack engineering, and cloud-native systems.
+      I focus on building production-ready software with strong architectural foundations,
+      scalability, and long-term maintainability — not just demos.
+    </p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container reveal">
+    <h2>Experience</h2>
+    <div class="grid">
+
+      <div class="card">
+        <h3>Intern – Full Stack Development (AWS)</h3>
+        <p><strong>Infinitra Innovations</strong> · Sep 2025 – Present</p>
+        <p>
+          Building and maintaining frontend and backend systems.
+          Working with databases, APIs, and AWS services to deliver
+          scalable, cloud-native applications.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Lead – App Development</h3>
+        <p><strong>CINTEL’s Next-Gen AI</strong> · Oct 2025 – Present</p>
+        <p>
+          Leading app development initiatives end-to-end.
+          Responsible for architecture decisions, recruitment,
+          onboarding, and mentoring junior developers.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Creatives Team Member</h3>
+        <p><strong>CINTEL’s Next-Gen AI</strong> · Oct 2024 – Oct 2025</p>
+        <p>
+          Managed digital presence and social media strategy
+          for the official AI club of the Department of Computational Intelligence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Vice President – Education</h3>
+        <p><strong>Toastmasters International</strong></p>
+        <p>
+          Led educational programs, managed weekly meetings,
+          and oversaw club-level events across two consecutive terms.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container reveal">
+    <h2>Projects</h2>
+    <div class="grid">
+
+      <div class="card">
+        <h3>SRM Admissions AI Chatbot</h3>
+        <p>NLP-based chatbot guiding applicants through admissions workflows.</p>
+      </div>
+
+      <div class="card">
+        <h3>Conversational AI (DialoGPT)</h3>
+        <p>Large-scale conversational system focused on dialogue flow and relevance.</p>
+      </div>
+
+      <div class="card">
+        <h3>Crop Price Prediction</h3>
+        <p>Regression-based ML model predicting agricultural prices.</p>
+      </div>
+
+      <div class="card">
+        <h3>Hierarchical AI Architecture (Research)</h3>
+        <p>Research work on bi-level AI architectures for humanoid robotics.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container reveal">
+    <h2>Certifications</h2>
+    <div class="grid">
+      <div class="card">AWS Certified AI Practitioner</div>
+      <div class="card">Amazon Bedrock – Getting Started</div>
+      <div class="card">Amazon Q Developer – Getting Started</div>
+      <div class="card">Machine Learning Terminology & Process</div>
+      <div class="card">Programming in Java – IIT Kharagpur</div>
+      <div class="card">Introduction to Operating Systems – IIT Madras</div>
+      <div class="card">Fundamentals of OOP – IIT Roorkee</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container reveal">
+    <h2>Skills</h2>
+    <div class="list">
+      <span class="pill">Python</span>
+      <span class="pill">Java</span>
+      <span class="pill">Flask</span>
+      <span class="pill">AWS</span>
+      <span class="pill">Docker</span>
+      <span class="pill">Machine Learning</span>
+      <span class="pill">NLP</span>
+      <span class="pill">LLMs</span>
+      <span class="pill">System Design</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container reveal">
+    <h2>Contact</h2>
+    <p>
+      Open to internships, leadership roles, research collaborations,
+      and serious engineering discussions.
+    </p>
+
+    <p style="margin-top:24px;">
+      <a href="mailto:mridul.mat@outlook.com">mridul.mat@outlook.com</a><br/>
+      <a href="https://www.linkedin.com/in/matmridul/" target="_blank">linkedin.com/in/matmridul</a><br/>
+      <a href="https://github.com/MatMridul" target="_blank">github.com/MatMridul</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Mridul Mathur
+</footer>
+
+<script>
+  document.getElementById("year").innerText = new Date().getFullYear();
+
+  const reveals = document.querySelectorAll(".reveal");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("active");
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>

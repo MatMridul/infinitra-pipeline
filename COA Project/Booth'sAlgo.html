@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Booth's Algorithm Visualizer</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#60a5fa;--muted:#94a3b8;--panel:#0b1320}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071027 0%, #0b1220 100%)}
+    .wrap{max-width:1100px;margin:28px auto;padding:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    h1{margin:0 0 8px;font-size:20px}
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:18px}
+    .card{background:var(--card);padding:14px;border-radius:10px;color:#dbeafe}
+    label{display:block;color:var(--muted);font-size:13px;margin-top:8px}
+    input[type="number"],select{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#07203a;font-weight:600;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .registers{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .reg{background:var(--panel);padding:10px;border-radius:8px;min-width:120px}
+    .bits{font-family:monospace;background:#041427;padding:8px;border-radius:6px;margin-top:8px;overflow:auto}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left;font-size:13px}
+    .log{max-height:340px;overflow:auto}
+    .big{font-weight:700;color:#fff}
+    .footer{margin-top:12px;color:var(--muted);font-size:13px}
+    .controls .speed{display:flex;align-items:center;gap:8px}
+    .highlight{background:rgba(96,165,250,0.12);padding:6px;border-radius:6px}
+    .step-btn{background:#34d399;color:#002216}
+    @media(max-width:880px){.grid{grid-template-columns:1fr;}.wrap{margin:10px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <div>
+        <h1>Booth's Algorithm Visualizer</h1>
+        <div style="color:var(--muted);font-size:13px">Visualize step-by-step Booth multiplication (two's complement).</div>
+      </div>
+      <div style="text-align:right;color:var(--muted);font-size:13px">COA Mini-Project - RA2411026010137, RA2411026010132 and  RA2411026010143  </div>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="card">
+        <label>Multiplicand (M) — signed integer</label>
+        <input id="multiplicand" type="number" value="-7" />
+
+        <label>Multiplier (Q) — signed integer</label>
+        <input id="multiplier" type="number" value="3" />
+
+        <label>Bit width (n) — bits per operand (suggest 8 or 16)</label>
+        <select id="bits">
+          <option>8</option>
+          <option>12</option>
+          <option selected>16</option>
+        </select>
+
+        <div class="controls">
+          <button id="initBtn">Initialize</button>
+          <button id="stepBtn" class="step-btn ghost">Step</button>
+          <button id="runBtn">Play</button>
+          <button id="resetBtn" class="ghost">Reset</button>
+        </div>
+
+        <div class="controls" style="margin-top:8px;align-items:center">
+          <div class="speed">Speed: <input id="speed" type="range" min="100" max="2000" value="700" /> <span id="speedVal">700ms</span></div>
+        </div>
+
+        <div class="footer">Tip: Click <span class="highlight">Initialize</span>, then use <span class="highlight">Step</span> to walk through each cycle. <span class="highlight">Play</span> runs automatically.</div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+          <div style="font-size:15px">Registers & Visual</div>
+          <div style="font-size:13px;color:var(--muted)">A = Accumulator • Q = Multiplier • Q(-1) single bit</div>
+        </div>
+
+        <div class="registers" id="regArea">
+          <div class="reg">
+            <div style="color:var(--muted);font-size:12px">A (acc)</div>
+            <div id="A_bits" class="bits">0000</div>
+            <div style="margin-top:6px;color:var(--muted)">dec: <span id="A_dec" class="big">0</span></div>
+          </div>
+
+          <div class="reg">
+            <div style="color:var(--muted);font-size:12px">Q (mult)</div>
+            <div id="Q_bits" class="bits">0000</div>
+            <div style="margin-top:6px;color:var(--muted)">dec: <span id="Q_dec" class="big">0</span></div>
+          </div>
+
+          <div class="reg">
+            <div style="color:var(--muted);font-size:12px">Q(−1)</div>
+            <div id="Q1_bits" class="bits">0</div>
+            <div style="margin-top:6px;color:var(--muted)">—</div>
+          </div>
+
+          <div class="reg" style="flex:1;min-width:200px">
+            <div style="color:var(--muted);font-size:12px">M (multiplicand)</div>
+            <div id="M_bits" class="bits">0000</div>
+            <div style="margin-top:6px;color:var(--muted)">dec: <span id="M_dec" class="big">0</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px">
+          <div style="color:var(--muted);font-size:13px">Operation log</div>
+          <div class="log">
+            <table id="logTable">
+              <thead><tr><th>Step</th><th>A</th><th>Q</th><th>Q(-1)</th><th>Operation</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;display:flex;gap:8px;align-items:center;justify-content:space-between">
+          <div style="color:var(--muted)">Final Product ([A,Q])</div>
+          <div style="text-align:right">
+            <div style="font-family:monospace" id="finalBin">--</div>
+            <div style="color:var(--muted)">dec: <span id="finalDec" class="big">--</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Booth's algorithm visualizer - pure JS
+    // Use BigInt for safety on shifts and masks
+
+    const $ = id => document.getElementById(id)
+    const multiplicandInput = $('multiplicand')
+    const multiplierInput = $('multiplier')
+    const bitsSelect = $('bits')
+    const initBtn = $('initBtn')
+    const stepBtn = $('stepBtn')
+    const runBtn = $('runBtn')
+    const resetBtn = $('resetBtn')
+    const speed = $('speed')
+    const speedVal = $('speedVal')
+
+    const A_bits_el = $('A_bits')
+    const Q_bits_el = $('Q_bits')
+    const Q1_bits_el = $('Q1_bits')
+    const M_bits_el = $('M_bits')
+    const A_dec = $('A_dec')
+    const Q_dec = $('Q_dec')
+    const M_dec = $('M_dec')
+    const logTbody = $('logTable').querySelector('tbody')
+    const finalBin = $('finalBin')
+    const finalDec = $('finalDec')
+
+    let n = 8
+    let M = 0n, A = 0n, Q = 0n, Q1 = 0n
+    let mask = 0n, totalBits = 0n, totalMask = 0n
+    let stepCount = 0
+    let maxSteps = 0
+    let running = false
+    let timer = null
+
+    function toTwos(x, bits){
+      // returns BigInt masked representation of signed x in two's complement
+      const B = BigInt(bits)
+      const maskLocal = (1n<<B) - 1n
+      let val = BigInt(x)
+      if(val < 0) val = (1n<<B) + val // two's complement
+      return val & maskLocal
+    }
+
+    function fromTwos(val, bits){
+      const B = BigInt(bits)
+      const sign = (val >> (B-1n)) & 1n
+      if(sign === 0n) return Number(val)
+      // negative
+      const inv = val - (1n<<B)
+      return Number(inv)
+    }
+
+    function binStr(val, bits){
+      let s = val.toString(2)
+      if(s.length > bits){
+        // trim higher bits
+        s = s.slice(-bits)
+      }
+      return s.padStart(bits, '0')
+    }
+
+    function updateDisplay(){
+      A_bits_el.textContent = binStr(A, n)
+      Q_bits_el.textContent = binStr(Q, n)
+      Q1_bits_el.textContent = Q1.toString()
+      M_bits_el.textContent = binStr(M, n)
+      A_dec.textContent = fromTwos(A, n)
+      Q_dec.textContent = fromTwos(Q, n)
+      M_dec.textContent = fromTwos(M, n)
+    }
+
+    function logStep(step, op){
+      const tr = document.createElement('tr')
+      const tdStep = document.createElement('td')
+      tdStep.textContent = step
+      tr.appendChild(tdStep)
+      const tdA = document.createElement('td'); tdA.textContent = binStr(A,n); tr.appendChild(tdA)
+      const tdQ = document.createElement('td'); tdQ.textContent = binStr(Q,n); tr.appendChild(tdQ)
+      const tdQ1 = document.createElement('td'); tdQ1.textContent = Q1.toString(); tr.appendChild(tdQ1)
+      const tdOp = document.createElement('td'); tdOp.textContent = op; tr.appendChild(tdOp)
+      logTbody.prepend(tr)
+    }
+
+    function combineAndARS(){
+      // combine [A (n bits) | Q (n bits) | Q1 (1 bit)] into total (2n+1 bits)
+      const nb = BigInt(n)
+      totalBits = 2n*nb + 1n
+      totalMask = (1n<<totalBits) - 1n
+      let combined = ((A & mask) << (nb + 1n)) | ((Q & mask) << 1n) | (Q1 & 1n)
+      // sign bit is MSB of A
+      const sign = (A >> (nb - 1n)) & 1n
+      // arithmetic right shift by 1: if sign==1, top bit set after shift
+      combined = (combined >> 1n) | (sign << (totalBits - 1n))
+      combined &= totalMask
+      // extract back
+      const newA = (combined >> (nb + 1n)) & mask
+      const newQ = (combined >> 1n) & mask
+      const newQ1 = combined & 1n
+      A = newA
+      Q = newQ
+      Q1 = newQ1
+    }
+
+    function init(){
+      n = parseInt(bitsSelect.value,10)
+      const mVal = parseInt(multiplicandInput.value,10)
+      const qVal = parseInt(multiplierInput.value,10)
+      mask = (1n<<BigInt(n)) - 1n
+      M = toTwos(mVal, n)
+      A = 0n
+      Q = toTwos(qVal, n)
+      Q1 = 0n
+      stepCount = 0
+      maxSteps = n
+      logTbody.innerHTML = ''
+      finalBin.textContent = '--'
+      finalDec.textContent = '--'
+      updateDisplay()
+      logStep('Init', 'Initialized registers')
+    }
+
+    function step(){
+      if(stepCount >= maxSteps){
+        // finished
+        const product = ((A & mask) << BigInt(n)) | (Q & mask)
+        finalBin.textContent = binStr(product, n*2)
+        // convert two's to signed of 2n bits
+        const signed = (product >> BigInt(2*n - 1)) & 1n ? Number(product - (1n << BigInt(2*n))) : Number(product)
+        finalDec.textContent = signed
+        logStep('Done', 'Completed all cycles')
+        return
+      }
+
+      // Examine Q0 and Q1
+      const Q0 = Q & 1n
+      const opKey = `${Q0}${Q1}`
+      if(opKey === '01'){
+        // A = A + M
+        A = (A + M) & mask
+        logStep(`S${stepCount+1}`, 'A = A + M')
+      } else if(opKey === '10'){
+        // A = A - M
+        A = (A - M) & mask
+        logStep(`S${stepCount+1}`, 'A = A - M')
+      } else {
+        logStep(`S${stepCount+1}`, `No add/sub (Q0Q-1 = ${opKey})`)
+      }
+
+      // ARS
+      combineAndARS()
+      stepCount++
+      updateDisplay()
+
+      if(stepCount >= maxSteps){
+        const product = ((A & mask) << BigInt(n)) | (Q & mask)
+        finalBin.textContent = binStr(product, n*2)
+        const signed = (product >> BigInt(2*n - 1)) & 1n ? Number(product - (1n << BigInt(2*n))) : Number(product)
+        finalDec.textContent = signed
+        logStep('End', 'Final product ready')
+        running = false
+        clearInterval(timer)
+        runBtn.textContent = 'Play'
+      }
+    }
+
+    initBtn.addEventListener('click', ()=>{
+      running = false; clearInterval(timer); runBtn.textContent = 'Play'
+      init();
+    })
+    stepBtn.addEventListener('click', ()=>{ step(); updateDisplay() })
+
+    runBtn.addEventListener('click', ()=>{
+      if(!running){
+        running = true; runBtn.textContent = 'Pause'
+        timer = setInterval(()=>{ step() }, parseInt(speed.value,10))
+      } else {
+        running = false; runBtn.textContent = 'Play'; clearInterval(timer)
+      }
+    })
+
+    resetBtn.addEventListener('click', ()=>{
+      running = false; clearInterval(timer); runBtn.textContent = 'Play'
+      multiplicandInput.value = 0; multiplierInput.value = 0; bitsSelect.value = '16'
+      init();
+    })
+
+    speed.addEventListener('input', ()=>{ speedVal.textContent = speed.value + 'ms'; if(running){ clearInterval(timer); timer = setInterval(()=>step(), parseInt(speed.value,10)) } })
+
+    // auto init on load
+    window.addEventListener('load', ()=>{
+      init()
+    })
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+
+model_name = "microsoft/DialoGPT-large"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+
+history_file = "chat_history.pth"
+
+try:
+    chat_history_ids = torch.load(history_file).to(device)
+except (FileNotFoundError, RuntimeError):
+    chat_history_ids = None
+
+
+def generate_response(user_input, temperature=0.6, top_k=50, top_p=0.9, max_history=1024):
+    global chat_history_ids
+
+    input_ids = tokenizer.encode(user_input + tokenizer.eos_token, return_tensors="pt").to(device)
+
+    if chat_history_ids is not None:
+        input_ids = torch.cat([chat_history_ids, input_ids], dim=-1)
+
+    # Trim history to avoid exceeding model limits
+    if input_ids.shape[-1] > max_history:
+        input_ids = input_ids[:, -max_history:]
+
+    attention_mask = torch.ones_like(input_ids, dtype=torch.long).to(device)
+
+    response_ids = model.generate(
+        input_ids,
+        attention_mask=attention_mask,
+        max_length=min(input_ids.shape[-1] + 50, 2048),  # Reduced max response length
+        pad_token_id=tokenizer.eos_token_id,
+        temperature=temperature,
+        top_k=top_k,
+        top_p=top_p,
+        do_sample=True,
+        no_repeat_ngram_size=2,
+    )
+
+    response_text = tokenizer.decode(response_ids[:, input_ids.shape[-1]:][0], skip_special_tokens=True)
+
+    chat_history_ids = response_ids[:, -max_history:]
+    torch.save(chat_history_ids, history_file)
+
+    return response_text
+
+
+if __name__ == "__main__":
+    print("Model loaded successfully")
+    print("Chatbot is running! Type 'exit' to quit.")
+
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "exit":
+            print("Chatbot: Goodbye!")
+            break
+
+        response = generate_response(user_input)
+        print("Chatbot:", response)

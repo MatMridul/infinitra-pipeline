@@ -1,0 +1,12 @@
+name="Anushka"
+name1="great"
+nam="du"
+nam1="gr"
+nam2="a"
+mat="navneet"
+name_in={"Aggam","Jai","Aditya"}
+var="&"
+print(var.join(name_in))
+print(len(name))
+print(name.lower())
+print(mat.upper())

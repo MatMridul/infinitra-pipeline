@@ -1,0 +1,187 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MethodOverridingDemo",
+            "request": "launch",
+            "mainClass": "MethodOverridingDemo",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "SafeDowncastingDemo",
+            "request": "launch",
+            "mainClass": "SafeDowncastingDemo",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "MethodOverloadingDemo",
+            "request": "launch",
+            "mainClass": "MethodOverloadingDemo",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "LeapYearCheck",
+            "request": "launch",
+            "mainClass": "LeapYearCheck",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "SimpleCalculator",
+            "request": "launch",
+            "mainClass": "SimpleCalculator",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "GradingSystem",
+            "request": "launch",
+            "mainClass": "GradingSystem",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "NumberSign",
+            "request": "launch",
+            "mainClass": "NumberSign",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "TemperatureCheck",
+            "request": "launch",
+            "mainClass": "TemperatureCheck",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "VendingMachine",
+            "request": "launch",
+            "mainClass": "VendingMachine",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "AgeCheck",
+            "request": "launch",
+            "mainClass": "AgeCheck",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "EvenOrOdd",
+            "request": "launch",
+            "mainClass": "EvenOrOdd",
+            "projectName": "Programs_d3d17f7"
+        },
+        {
+            "type": "java",
+            "name": "MethodToFindSecondSmallestElementInGivenArray",
+            "request": "launch",
+            "mainClass": "MethodToFindSecondSmallestElementInGivenArray",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "CommonElements",
+            "request": "launch",
+            "mainClass": "CommonElements",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "RepeatingNumber",
+            "request": "launch",
+            "mainClass": "RepeatingNumber",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "conops",
+            "request": "launch",
+            "mainClass": "conops",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "hiworld",
+            "request": "launch",
+            "mainClass": "hiworld",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "sampleProg1_1",
+            "request": "launch",
+            "mainClass": "sampleProg1_1",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "sampleProg1",
+            "request": "launch",
+            "mainClass": "sampleProg1",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "HelloWorld",
+            "request": "launch",
+            "mainClass": "HelloWorld",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "HelloWorld",
+            "request": "launch",
+            "mainClass": "Java.HelloWorld",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Java.Main",
+            "projectName": "Mridul's Programs_a02878fc"
+        },
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "enter program name, for example ${workspaceFolder}/a.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/path/to/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}
